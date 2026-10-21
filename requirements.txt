@@ -2,7 +2,6 @@
 
 # Telegram MTProto Client
 pyrotgfork>=2.2.0
-TgCrypto>=1.2.3
 
 # Web Framework
 fastapi>=0.109.0
@@ -28,5 +27,3 @@ aiofiles>=23.2.0
 
 # Rate Limiting
 slowapi>=0.1.9
-
-
