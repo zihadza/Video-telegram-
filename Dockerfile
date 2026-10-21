@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# gcc এবং build-essential ইনস্টল করা হচ্ছে TgCrypto কম্পাইল করার জন্য
+# gcc এবং build-essential ইনস্টল করা হচ্ছে TgCrypto-র জন্য
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
