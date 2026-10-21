@@ -1,19 +1,19 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
-# gcc এবং build-essential ইনস্টল করা হচ্ছে TgCrypto-র জন্য
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# ডাটাবেস ফাইলের জন্য ফোল্ডার তৈরি এবং পারমিশন দেওয়া
+RUN mkdir -p /app/data && chmod 777 /app/data
 
+# ভার্চুয়াল এনভায়রনমেন্ট তৈরি
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+# প্যাকেজ ইনস্টল করা
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# বাকি কোড কপি করা
 COPY . .
 
 EXPOSE 8000
