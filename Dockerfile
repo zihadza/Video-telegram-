@@ -1,26 +1,20 @@
-# Backend Dockerfile
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# gcc এবং build-essential ইনস্টল করা হচ্ছে TgCrypto বিল্ড করার জন্য
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY requirements.txt .
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-# Note: We copy the 'app' directory into /app/app
-COPY app/ ./app/
+COPY . .
 
-# Create directory for Telegram sessions
-RUN mkdir -p /app/session
-
-# Expose port
 EXPOSE 8000
-
-# Run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
